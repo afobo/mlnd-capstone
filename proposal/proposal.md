@@ -34,9 +34,23 @@ This time is a sum of three:
 In this project, I would focus on t2 estimation only, leaving t1 and t3 for a future.
 
 ### Datasets and Inputs
-_(approx. 2-3 paragraphs)_
 
-In this section, the dataset(s) and/or input(s) being considered for the project should be thoroughly described, such as how they relate to the problem and why they should be used. Information such as how the dataset or input is (was) obtained, and the characteristics of the dataset or input, should be included with relevant references and citations as necessary It should be clear how the dataset(s) or input(s) will be used in the project and whether their use is appropriate given the context of the problem.
+As an input, I would use historical data of 1200 VM preparations requests collected over 2 months.
+
+- Requests : 1200 | 5496 VMs
+-    Daily : 17.1 | 78.5 VMs
+-  Success : 1192 | 99.33%
+-  Failure :    8 | 0.66%
+
+For a single request, I have the following data:
+- Start timestamp
+- End timestamp
+- Number of VMs
+- VM flavor (# of CPUs, RAM and Disk)
+- Base OS version: RHEL 6.9, 7.3 or 7.4
+- Requested 3rdparty software (with version numbers)
+- Success/Failure flag
+- Number of attempts performed to create and provision VMs
 
 ### Solution Statement
 _(approx. 1 paragraph)_
