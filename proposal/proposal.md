@@ -53,9 +53,9 @@ For a single request, I have the following data:
 - Number of attempts performed to create and provision VMs
 
 ### Solution Statement
-_(approx. 1 paragraph)_
 
-In this section, clearly describe a solution to the problem. The solution should be applicable to the project domain and appropriate for the dataset(s) or input(s) given. Additionally, describe the solution thoroughly such that it is clear that the solution is quantifiable (the solution can be expressed in mathematical or logical terms) , measurable (the solution can be measured by some metric and clearly observed), and replicable (the solution can be reproduced and occurs more than once).
+The solution to the problem is a regression model developed with the help of scikit-learn library. 
+The model should get expected VM cluster details and produce a single value of expected time period to get such cluster up and running.
 
 ### Benchmark Model
 _(approximately 1-2 paragraphs)_
