@@ -1,15 +1,27 @@
 # Machine Learning Engineer Nanodegree
 ## Capstone Proposal
-Joe Udacity  
+Sergey Sergeev  
 December 31st, 2050
 
 ## Proposal
 _(approx. 2-3 pages)_
 
 ### Domain Background
-_(approx. 1-2 paragraphs)_
 
-In this section, provide brief details on the background information of the domain from which the project is proposed. Historical information relevant to the project should be included. It should be clear how or why a problem in the domain can or should be solved. Related academic research should be appropriately cited in this section, including why that research is relevant. Additionally, a discussion of your personal motivation for investigating a particular problem in the domain is encouraged but not required.
+I work for the software development company, and we pay high attention to the test automation.
+During 15 years of our product development and many implemented customer projects we accumulated a lot of autotests.
+The autotests checks various parts of our product in different environments, e.g. 
+- 1, 2, 4, 8 virtual machine clusters
+- RedHat Enterprise Linux 6 or 7
+- different versions of Java (our product is written mostly in Java)
+
+Individual test runtime vary from few minutes to several hours depending on their complexity and size.
+
+We built the private cloud (based on Openstack) for the continuous autotest execution and a simple Web interface to manage it.
+On the dedicated page test engineer or developer may choose the list of tests he want to execute, number of virtual machines, versions of the 3rdparty software to be provisioned in the VMs, and so on.
+After that the execution request is queued and will be executed as soon as possible according to cloud capacity and current VM consumption.
+As a result, engineer receives an email with the test report.
+Test reports are also stored in some dedicated place for reference, comparison and further analysis needs.     
 
 ### Problem Statement
 _(approx. 1 paragraph)_
