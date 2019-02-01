@@ -24,9 +24,14 @@ As a result, engineer receives an email with the test report.
 Test reports are also stored in some dedicated place for reference, comparison and further analysis needs.     
 
 ### Problem Statement
-_(approx. 1 paragraph)_
 
-In this section, clearly describe the problem that is to be solved. The problem described should be well defined and should have at least one relevant potential solution. Additionally, describe the problem thoroughly such that it is clear that the problem is quantifiable (the problem can be expressed in mathematical or logical terms) , measurable (the problem can be measured by some metric and clearly observed), and replicable (the problem can be reproduced and occurs more than once).
+For the higher cloud capacity utilization and better user experience we would like to have a model capable to predict overall test execution time.
+This time is a sum of three:
+- **Queue time (t1)**: time spent by an execution request in the queue waiting for the free cloud capacity
+- **VM preparation time (t2)**: time to create a cluster of VMs and provision it with the requested 3rdparty software
+- **Actual test execution time (t3)**: actual test execution till the final report   
+
+In this project, I would focus on t2 estimation only, leaving t1 and t3 for a future.
 
 ### Datasets and Inputs
 _(approx. 2-3 paragraphs)_
