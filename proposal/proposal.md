@@ -65,9 +65,8 @@ As a benchmark, I would use a simple model which doesn't take into account anyth
 The model should calculate expected time as an average over historical data for clusters of the same size (number of VMs).
 
 ### Evaluation Metrics
-_(approx. 1-2 paragraphs)_
 
-In this section, propose at least one evaluation metric that can be used to quantify the performance of both the benchmark model and the solution model. The evaluation metric(s) you propose should be appropriate given the context of the data, the problem statement, and the intended solution. Describe how the evaluation metric(s) are derived and provide an example of their mathematical representations (if applicable). Complex evaluation metrics should be clearly defined and quantifiable (can be expressed in mathematical or logical terms).
+R^2 (coefficient of determination) regression score would be used as evaluation metric: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html
 
 ### Project Design
 _(approx. 1 page)_
