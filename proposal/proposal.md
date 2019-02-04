@@ -1,7 +1,7 @@
 # Machine Learning Engineer Nanodegree
 ## Capstone Proposal
 Sergey Sergeev  
-December 31st, 2050
+February 4th, 2019
 
 ## Proposal
 
@@ -12,6 +12,7 @@ Virtual Machine (VM) preparation time prediction
 I work for the software development company, and we pay high attention to the test automation.
 During 15 years of our product development and many implemented customer projects we accumulated a lot of autotests.
 Autotests check various parts of our product in different environments, e.g. 
+
 - 1, 2, 4, 8 VM clusters
 - RedHat Enterprise Linux (RHEL) version 6 or 7
 - different versions of Java (our primary programming language)
@@ -29,6 +30,7 @@ Test reports are also stored in some shared directory for reference, comparison 
 
 For the higher cloud capacity utilization and better user experience we would like to have a model capable to predict overall test execution time.
 This time is a sum of three:
+
 - **Queue time (t1)**: time spent by an execution request in the queue waiting for the free cloud capacity
 - **VM preparation time (t2)**: time to create a cluster of VMs and provision it with the requested 3rdparty software
 - **Actual test execution time (t3)**: actual test execution till the final report   
@@ -45,6 +47,7 @@ As an input, I would use historical data of 1200 VM preparations requests collec
 -  Failure :    8 | 0.66%
 
 For a single request, I have the following data:
+
 - Start timestamp
 - End timestamp
 - Number of VMs
@@ -71,6 +74,7 @@ R^2 (coefficient of determination) regression score would be used as evaluation 
 ### Project Design
 
 Here is the brief workflow to prepare the solution as I see it now:
+
 - Clean up data: remove records about failed cluster creations - they are just garbage (0,66% of whole dataset)
 - Prepare benchmark model for final solution evaluation
 - Analyse and remove data outliers
