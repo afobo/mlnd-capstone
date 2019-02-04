@@ -60,9 +60,9 @@ The solution to the problem is a regression model developed with the help of sci
 The model should get expected VM cluster details and produce a single value of expected time period to get such cluster up and running.
 
 ### Benchmark Model
-_(approximately 1-2 paragraphs)_
 
-In this section, provide the details for a benchmark model or result that relates to the domain, problem statement, and intended solution. Ideally, the benchmark model or result contextualizes existing methods or known information in the domain and problem given, which could then be objectively compared to the solution. Describe how the benchmark model or result is measurable (can be measured by some metric and clearly observed) with thorough detail.
+As a benchmark, I would use a simple model which doesn't take into account anything except requested VM cluster size (no details about 3rdparty software to be provisioned).
+The model should calculate expected time as an average over historical data for clusters of the same size (number of VMs).
 
 ### Evaluation Metrics
 _(approx. 1-2 paragraphs)_
