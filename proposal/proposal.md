@@ -51,7 +51,7 @@ For a single request, I have the following data:
 - VM flavor (# of CPUs, RAM and Disk)
 - Base OS version: RHEL 6.9, 7.3 or 7.4
 - Requested 3rdparty software (with version numbers)
-- Success/Failure flag
+- Success/Failure indication
 - Number of attempts performed to create and provision VMs
 
 ### Solution Statement
@@ -69,16 +69,17 @@ The model should calculate expected time as an average over historical data for 
 R^2 (coefficient of determination) regression score would be used as evaluation metric: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html
 
 ### Project Design
-_(approx. 1 page)_
 
-In this final section, summarize a theoretical workflow for approaching a solution given the problem. Provide thorough discussion for what strategies you may consider employing, what analysis of the data might be required before being used, or which algorithms will be considered for your implementation. The workflow and discussion that you provide should align with the qualities of the previous sections. Additionally, you are encouraged to include small visualizations, pseudocode, or diagrams to aid in describing the project design, but it is not required. The discussion should clearly outline your intended workflow of the capstone project.
+Here is the brief workflow to prepare the solution as I see it now:
+- Clean up data: remove records about failed cluster creations - they are just garbage (0,66% of whole dataset)
+- Prepare benchmark model for final solution evaluation
+- Analyse and remove data outliers
+- Remove useless features - e.g. success/failure indicator, number of attempts performed
+- Transform original features: one-hot encode features containing software version numbers
+- Consider transformation of "Number of VMs" to (0,1) range
+- Try grid search cross-validation with DecisionTreeRegressor (from scikit-learn)
+- Probably try other regressors for scikit-learn
 
------------
+(Various steps above should be accompanied with required visualizations)
 
-**Before submitting your proposal, ask yourself. . .**
-
-- Does the proposal you have written follow a well-organized structure similar to that of the project template?
-- Is each section (particularly **Solution Statement** and **Project Design**) written in a clear, concise and specific fashion? Are there any ambiguous terms or phrases that need clarification?
-- Would the intended audience of your project be able to understand your proposal?
-- Have you properly proofread your proposal to assure there are minimal grammatical and spelling mistakes?
-- Are all the resources used for this project correctly cited and referenced?
+- Test final model on a testing set, compare with the benchmark model. 
