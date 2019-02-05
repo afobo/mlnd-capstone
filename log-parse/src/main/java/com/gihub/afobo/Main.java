@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,6 +22,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 public class Main {
@@ -39,11 +41,47 @@ public class Main {
         System.out.println("========= Failed: " + failed.size());
         failed.forEach(System.out::println);
 
-        Set<String> optionNames = attempts.stream().flatMap(a -> a.getOptions().keySet().stream()).collect(Collectors.toCollection(TreeSet::new));
+        saveToCsv(attempts, "C:\\work-p\\udacity\\mlnd-capstone\\clusters.csv");
+    }
 
+    private static void saveToCsv(Collection<Attempt> attempts, String resultFile) throws IOException {
+        Set<String> optionNames = attempts.stream().flatMap(a -> a.getOptions().keySet().stream()).collect(Collectors.toCollection(TreeSet::new));
         System.out.println("========= Option names: ");
         optionNames.forEach(System.out::println);
 
+        StringBuilder header = new StringBuilder();
+        header.append("clusterName").append(",");
+        header.append("attempts").append(",");
+        header.append("startDate").append(",");
+        header.append("endDate").append(",");
+        header.append("failed").append(",");
+        header.append("completed").append(",");
+        header.append("vmCount").append(",");
+        header.append("buildName").append(",");
+        header.append(String.join(",", optionNames));
+        System.out.println(header);
+
+        Stream<String> lines = attempts.stream()
+//                .limit(10)
+                .map(a -> {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(a.getClusterName()).append(",");
+                    sb.append(a.getAttemptNumber()).append(",");
+                    sb.append(a.getStartDate().getTime()).append(",");
+                    sb.append(a.getEndDate().getTime()).append(",");
+                    sb.append(a.isFailed()).append(",");
+                    sb.append(a.isCompleted()).append(",");
+                    sb.append(a.getVmCount()).append(",");
+                    sb.append(a.getBuildName()).append(",");
+                    List<String> optionValues = optionNames.stream().map(name -> a.getOptions().get(name)).collect(Collectors.toList());
+                    sb.append(String.join(",", optionValues));
+                    return sb.toString();
+                });
+
+        try (PrintWriter pw = new PrintWriter(Files.newBufferedWriter(Paths.get(resultFile)))) {
+            pw.println(header);
+            lines.forEach(pw::println);
+        }
     }
 
     private static Collection<Attempt> parseLogDir(String logDir) throws IOException {
