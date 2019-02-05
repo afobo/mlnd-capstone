@@ -1,78 +1,106 @@
 package com.gihub.afobo;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class Main {
-    public static void main(String[] args) {
-        String fileName = "C:\\work-p\\udacity\\mlnd-capstone\\log-parse\\src\\main\\resources\\abondar.20181217125633-deploy-auto.log.1";
+    public static void main(String[] args) throws IOException, ParseException {
+        String logDir = "C:\\work-p\\udacity\\mlnd-capstone\\log-parse\\src\\main\\resources\\";
 
-        Date startDate = null;
-        Date endDate = null;
-        boolean failed = false;
-        boolean completed = false;
-        String clusterName;
-        String vmCount;
-        String buildName;
+        DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(logDir), "*-deploy-auto.log.*");
 
-        String attempt = fileName.substring(fileName.lastIndexOf('.') + 1);
-        System.out.println("attempt = " + attempt);
+        Collection<Attempt> attempts = StreamSupport.stream(directoryStream.spliterator(), false)
+                .map(path -> parseFile(path.toFile()))
+                .collect(Collectors.toList());
 
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        Collection<Attempt> mergedAttempts = attempts.stream()
+                .collect(Collectors.toMap(
+                        Attempt::getClusterName,
+                        a -> a,
+                        (a1, a2) -> {
+                            // take latest attempt
+                            Attempt a = a1.getAttemptNumber() > a2.getAttemptNumber() ? a1 : a2;
+                            a.setStartDate(min(a1.getStartDate(), a2.getStartDate()));
+                            a.setEndDate(max(a1.getEndDate(), a2.getEndDate()));
+                            return a;
+                        }
+                )).values();
+
+        ///
+        attempts.forEach(System.out::println);
+        System.out.println("========= Merged: " + mergedAttempts.size());
+        mergedAttempts.forEach(System.out::println);
+    }
+
+    private static Date min(Date d1, Date d2) {
+        return d1.before(d2) ? d1 : d2;
+    }
+
+    private static Date max(Date d1, Date d2) {
+        return d1.after(d2) ? d1 : d2;
+    }
+
+    private static Attempt parseFile(File file) {
+        Attempt attempt = new Attempt();
+
+        int attemptNumber = Integer.parseInt(file.getName().substring(file.getName().lastIndexOf('.') + 1));
+        attempt.setAttemptNumber(attemptNumber);
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             String prevLine = null;
             while ((line = br.readLine()) != null) {
                 line = line.trim();
                 if (line.startsWith("\"with")) {
-                    System.out.println(line);
                     KeyValue kv = parseKeyValueEquals(line);
-                    System.out.println("kv = " + kv);
+                    attempt.getOptions().put(kv.key, kv.value);
                 }
                 if (line.startsWith("\"cluster_name")) {
-                    System.out.println(line);
                     KeyValue kv = parseKeyValueColon(line);
-                    clusterName = kv.value;
+                    attempt.setClusterName(kv.value);
                 }
                 if (line.startsWith("\"vm_count")) {
-                    System.out.println(line);
                     KeyValue kv = parseKeyValueColon(line);
-                    vmCount = kv.value;
+                    attempt.setVmCount(kv.value);
                 }
                 if (line.startsWith("\"build_name")) {
-                    System.out.println(line);
                     KeyValue kv = parseKeyValueColon(line);
-                    buildName = kv.value;
+                    attempt.setBuildName(kv.value);
                 }
-                if (startDate == null) {
-                    startDate = parseDate(line);
+                if (attempt.getStartDate() == null) {
+                    attempt.setStartDate(parseDate(line));
                 }
-
                 if (line.contains("NO MORE HOSTS LEFT")) {
-                    failed = true;
+                    attempt.setFailed(true);
                 }
-
                 if (line.contains("PLAY RECAP")) {
-                    completed = true;
+                    attempt.setCompleted(true);
                 }
 
                 prevLine = line;
             }
 
             if (prevLine != null) {
-                endDate = parseDate(prevLine);
+                attempt.setEndDate(parseDate(prevLine));
             }
-
-            System.out.println("startDate = " + startDate);
-            System.out.println("endDate = " + endDate);
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to parse " + file, e);
         }
+        return attempt;
     }
 
     private static Date parseDate(String line) throws ParseException {
