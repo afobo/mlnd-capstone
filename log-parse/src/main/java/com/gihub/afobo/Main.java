@@ -14,7 +14,6 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -27,61 +26,11 @@ import java.util.stream.StreamSupport;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {
-//        String logDir = "C:\\work-p\\udacity\\mlnd-capstone\\log-parse\\src\\main\\resources\\";
         String logDir = "C:\\work-p\\udacity\\mlnd-capstone\\tower-log";
+        String resultFile = "C:\\work-p\\udacity\\mlnd-capstone\\clusters.csv";
 
         Collection<Attempt> attempts = parseLogDir(logDir);
-
-        ///
-        System.out.println("========= Merged: " + attempts.size());
-        List<Attempt> failed = attempts.stream()
-                .filter(Attempt::isFailed)
-                .sorted(Comparator.comparing(Attempt::getStartDate))
-                .collect(Collectors.toList());
-        System.out.println("========= Failed: " + failed.size());
-        failed.forEach(System.out::println);
-
-        saveToCsv(attempts, "C:\\work-p\\udacity\\mlnd-capstone\\clusters.csv");
-    }
-
-    private static void saveToCsv(Collection<Attempt> attempts, String resultFile) throws IOException {
-        Set<String> optionNames = attempts.stream().flatMap(a -> a.getOptions().keySet().stream()).collect(Collectors.toCollection(TreeSet::new));
-        System.out.println("========= Option names: ");
-        optionNames.forEach(System.out::println);
-
-        StringBuilder header = new StringBuilder();
-        header.append("clusterName").append(",");
-        header.append("attempts").append(",");
-        header.append("startDate").append(",");
-        header.append("endDate").append(",");
-        header.append("failed").append(",");
-        header.append("completed").append(",");
-        header.append("vmCount").append(",");
-        header.append("buildName").append(",");
-        header.append(String.join(",", optionNames));
-        System.out.println(header);
-
-        Stream<String> lines = attempts.stream()
-//                .limit(10)
-                .map(a -> {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(a.getClusterName()).append(",");
-                    sb.append(a.getAttemptNumber()).append(",");
-                    sb.append(a.getStartDate().getTime()).append(",");
-                    sb.append(a.getEndDate().getTime()).append(",");
-                    sb.append(a.isFailed()).append(",");
-                    sb.append(a.isCompleted()).append(",");
-                    sb.append(a.getVmCount()).append(",");
-                    sb.append(a.getBuildName()).append(",");
-                    List<String> optionValues = optionNames.stream().map(name -> a.getOptions().get(name)).collect(Collectors.toList());
-                    sb.append(String.join(",", optionValues));
-                    return sb.toString();
-                });
-
-        try (PrintWriter pw = new PrintWriter(Files.newBufferedWriter(Paths.get(resultFile)))) {
-            pw.println(header);
-            lines.forEach(pw::println);
-        }
+        saveToCsv(attempts, resultFile);
     }
 
     private static Collection<Attempt> parseLogDir(String logDir) throws IOException {
@@ -96,21 +45,15 @@ public class Main {
                         Attempt::getClusterName,
                         a -> a,
                         (a1, a2) -> {
-                            // take latest attempt
+                            // merge two attempts:
+                            // 1) take latest attempt
+                            // 2) update start and end date in the merged result
                             Attempt a = a1.getAttemptNumber() > a2.getAttemptNumber() ? a1 : a2;
                             a.setStartDate(min(a1.getStartDate(), a2.getStartDate()));
                             a.setEndDate(max(a1.getEndDate(), a2.getEndDate()));
                             return a;
                         }
                 )).values();
-    }
-
-    private static Date min(Date d1, Date d2) {
-        return d1.before(d2) ? d1 : d2;
-    }
-
-    private static Date max(Date d1, Date d2) {
-        return d1.after(d2) ? d1 : d2;
     }
 
     private static Attempt parseSingleLog(File file) {
@@ -121,10 +64,10 @@ public class Main {
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            Date lastParsedDate = null;
+            Date latestSeenDate = null;
             while ((line = br.readLine()) != null) {
                 line = line.trim();
-                if (line.startsWith("\"with")) {
+                if (line.startsWith("\"with_")) {
                     KeyValue kv = parseKeyValueEquals(line);
                     attempt.getOptions().put(kv.key, kv.value);
                 }
@@ -148,18 +91,83 @@ public class Main {
                 }
                 Date lineDate = parseDate(line);
                 if (lineDate != null) {
-                    lastParsedDate = lineDate;
-                }
-                if (lineDate != null && attempt.getStartDate() == null) {
-                    attempt.setStartDate(lineDate);
+                    latestSeenDate = lineDate;
+                    if (attempt.getStartDate() == null) {
+                        attempt.setStartDate(lineDate);
+                    }
                 }
             }
-
-            attempt.setEndDate(lastParsedDate);
+            attempt.setEndDate(latestSeenDate);
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse " + file, e);
         }
         return attempt;
+    }
+
+    private static void saveToCsv(Collection<Attempt> attempts, String resultFile) throws IOException {
+        Set<String> optionNames = attempts.stream()
+                .flatMap(a -> a.getOptions().keySet().stream())
+                .collect(Collectors.toCollection(TreeSet::new));
+
+        StringBuilder header = new StringBuilder();
+        header.append("cluster_name").append(",");
+        header.append("attempts").append(",");
+        header.append("start_ts").append(",");
+        header.append("end_ts").append(",");
+        header.append("failed").append(",");
+        header.append("completed").append(",");
+        header.append("vm_count").append(",");
+        header.append("build_name").append(",");
+        header.append(String.join(",", optionNames));
+
+        Stream<String> lines = attempts.stream()
+//                .limit(10)
+                .map(a -> {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(a.getClusterName()).append(",");
+                    sb.append(a.getAttemptNumber()).append(",");
+                    sb.append(a.getStartDate().getTime()).append(",");
+                    sb.append(a.getEndDate().getTime()).append(",");
+                    sb.append(a.isFailed() ? "True" : "False").append(",");
+                    sb.append(a.isCompleted() ? "True" : "False").append(",");
+                    sb.append(a.getVmCount()).append(",");
+                    String buildName = a.getBuildName();
+                    if (buildName != null && !buildName.isEmpty()) {
+                        String buildDate = buildName.substring(0, 15);
+                        String buildStream = buildName.substring(16);
+                        // hide real project names (replace with hashcode)
+                        buildName = buildDate + "_Proj_" + Math.abs(buildStream.hashCode());
+                    }
+                    sb.append(buildName).append(",");
+                    List<String> optionValues = optionNames.stream()
+                            .map(name -> {
+                                String value = a.getOptions().get(name);
+                                if (value == null) {
+                                    value = name.endsWith("_version") ? "_default_" : "False";
+                                }
+                                return value;
+                            })
+                            .collect(Collectors.toList());
+                    sb.append(String.join(",", optionValues));
+                    return sb.toString();
+                });
+
+        try (PrintWriter pw = new PrintWriter(Files.newBufferedWriter(Paths.get(resultFile)))) {
+            pw.println(header);
+            lines.forEach(pw::println);
+        }
+    }
+
+    ////////
+    // misc utility methods
+    ////////
+
+    private static Date min(Date d1, Date d2) {
+        return d1.before(d2) ? d1 : d2;
+    }
+
+    private static Date max(Date d1, Date d2) {
+        return d1.after(d2) ? d1 : d2;
     }
 
     private static Date parseDate(String line) {
