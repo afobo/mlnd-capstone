@@ -16,6 +16,8 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -26,13 +28,32 @@ public class Main {
 //        String logDir = "C:\\work-p\\udacity\\mlnd-capstone\\log-parse\\src\\main\\resources\\";
         String logDir = "C:\\work-p\\udacity\\mlnd-capstone\\tower-log";
 
+        Collection<Attempt> attempts = parseLogDir(logDir);
+
+        ///
+        System.out.println("========= Merged: " + attempts.size());
+        List<Attempt> failed = attempts.stream()
+                .filter(Attempt::isFailed)
+                .sorted(Comparator.comparing(Attempt::getStartDate))
+                .collect(Collectors.toList());
+        System.out.println("========= Failed: " + failed.size());
+        failed.forEach(System.out::println);
+
+        Set<String> optionNames = attempts.stream().flatMap(a -> a.getOptions().keySet().stream()).collect(Collectors.toCollection(TreeSet::new));
+
+        System.out.println("========= Option names: ");
+        optionNames.forEach(System.out::println);
+
+    }
+
+    private static Collection<Attempt> parseLogDir(String logDir) throws IOException {
         DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(logDir), "*-deploy-auto.log.*");
 
         Collection<Attempt> attempts = StreamSupport.stream(directoryStream.spliterator(), false)
-                .map(path -> parseFile(path.toFile()))
+                .map(path -> parseSingleLog(path.toFile()))
                 .collect(Collectors.toList());
 
-        Collection<Attempt> mergedAttempts = attempts.stream()
+        return attempts.stream()
                 .collect(Collectors.toMap(
                         Attempt::getClusterName,
                         a -> a,
@@ -44,18 +65,6 @@ public class Main {
                             return a;
                         }
                 )).values();
-
-        ///
-        attempts.forEach(System.out::println);
-        System.out.println("========= Merged: " + mergedAttempts.size());
-        mergedAttempts.forEach(System.out::println);
-
-        List<Attempt> failed = mergedAttempts.stream()
-                .filter(Attempt::isFailed)
-                .sorted(Comparator.comparing(Attempt::getStartDate))
-                .collect(Collectors.toList());
-        System.out.println("========= Failed: " + failed.size());
-        failed.forEach(System.out::println);
     }
 
     private static Date min(Date d1, Date d2) {
@@ -66,7 +75,7 @@ public class Main {
         return d1.after(d2) ? d1 : d2;
     }
 
-    private static Attempt parseFile(File file) {
+    private static Attempt parseSingleLog(File file) {
         Attempt attempt = new Attempt();
 
         int attemptNumber = Integer.parseInt(file.getName().substring(file.getName().lastIndexOf('.') + 1));
