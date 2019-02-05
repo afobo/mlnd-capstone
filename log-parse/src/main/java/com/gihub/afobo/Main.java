@@ -1,5 +1,7 @@
 package com.gihub.afobo;
 
+import lombok.AllArgsConstructor;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -19,7 +21,8 @@ import java.util.stream.StreamSupport;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {
-        String logDir = "C:\\work-p\\udacity\\mlnd-capstone\\log-parse\\src\\main\\resources\\";
+//        String logDir = "C:\\work-p\\udacity\\mlnd-capstone\\log-parse\\src\\main\\resources\\";
+        String logDir = "C:\\work-p\\udacity\\mlnd-capstone\\tower-log";
 
         DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(logDir), "*-deploy-auto.log.*");
 
@@ -62,7 +65,7 @@ public class Main {
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            String prevLine = null;
+            Date lastParsedDate = null;
             while ((line = br.readLine()) != null) {
                 line = line.trim();
                 if (line.startsWith("\"with")) {
@@ -81,31 +84,35 @@ public class Main {
                     KeyValue kv = parseKeyValueColon(line);
                     attempt.setBuildName(kv.value);
                 }
-                if (attempt.getStartDate() == null) {
-                    attempt.setStartDate(parseDate(line));
-                }
-                if (line.contains("NO MORE HOSTS LEFT")) {
+                if (line.contains("NO MORE HOSTS LEFT") || line.contains("[ERROR]")) {
                     attempt.setFailed(true);
                 }
                 if (line.contains("PLAY RECAP")) {
                     attempt.setCompleted(true);
                 }
-
-                prevLine = line;
+                Date lineDate = parseDate(line);
+                if (lineDate != null) {
+                    lastParsedDate = lineDate;
+                }
+                if (lineDate != null && attempt.getStartDate() == null) {
+                    attempt.setStartDate(lineDate);
+                }
             }
 
-            if (prevLine != null) {
-                attempt.setEndDate(parseDate(prevLine));
-            }
+            attempt.setEndDate(lastParsedDate);
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse " + file, e);
         }
         return attempt;
     }
 
-    private static Date parseDate(String line) throws ParseException {
+    private static Date parseDate(String line) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
-        return format.parse(line);
+        try {
+            return format.parse(line);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
     private static KeyValue parseKeyValueEquals(String line) {
@@ -126,21 +133,9 @@ public class Main {
         throw new IllegalStateException("Can't parse line:" + line);
     }
 
+    @AllArgsConstructor
     private static class KeyValue {
         String key;
         String value;
-
-        KeyValue(String key, String value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return "KeyValue{" +
-                    "key='" + key + '\'' +
-                    ", value='" + value + '\'' +
-                    '}';
-        }
     }
 }
