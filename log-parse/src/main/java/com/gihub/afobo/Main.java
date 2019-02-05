@@ -13,7 +13,9 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -47,6 +49,13 @@ public class Main {
         attempts.forEach(System.out::println);
         System.out.println("========= Merged: " + mergedAttempts.size());
         mergedAttempts.forEach(System.out::println);
+
+        List<Attempt> failed = mergedAttempts.stream()
+                .filter(Attempt::isFailed)
+                .sorted(Comparator.comparing(Attempt::getStartDate))
+                .collect(Collectors.toList());
+        System.out.println("========= Failed: " + failed.size());
+        failed.forEach(System.out::println);
     }
 
     private static Date min(Date d1, Date d2) {
