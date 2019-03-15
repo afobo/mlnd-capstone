@@ -1,0 +1,268 @@
+2018-12-17 12:58:12,476 p=14008 u=jnetx |  PLAY [localhost] ***************************************************************
+2018-12-17 12:58:12,586 p=14008 u=jnetx |  TASK [print playbook variables] ************************************************
+2018-12-17 12:58:12,586 p=14008 u=jnetx |  Monday 17 December 2018  12:58:12 +0300 (0:00:00.239)       0:00:00.239 ******* 
+2018-12-17 12:58:12,691 p=14008 u=jnetx |  ok: [localhost] => (item=None) => {
+    "cluster_name": "abondar.20181217125633"
+}
+2018-12-17 12:58:12,699 p=14008 u=jnetx |  ok: [localhost] => (item=None) => {
+    "vm_count": "20"
+}
+2018-12-17 12:58:12,706 p=14008 u=jnetx |  ok: [localhost] => (item=None) => {
+    "build_name": "20181217_114827_KCell_ANM"
+}
+2018-12-17 12:58:12,717 p=14008 u=jnetx |  ok: [localhost] => (item=None) => {
+    "cluster_owner": "abondar"
+}
+2018-12-17 12:58:12,726 p=14008 u=jnetx |  ok: [localhost] => (item=None) => {
+    "experimental": false
+}
+2018-12-17 12:58:12,734 p=14008 u=jnetx |  TASK [set_fact] ****************************************************************
+2018-12-17 12:58:12,735 p=14008 u=jnetx |  Monday 17 December 2018  12:58:12 +0300 (0:00:00.148)       0:00:00.388 ******* 
+2018-12-17 12:58:12,941 p=14008 u=jnetx |  ok: [localhost]
+2018-12-17 12:58:12,949 p=14008 u=jnetx |  TASK [print software options] **************************************************
+2018-12-17 12:58:12,949 p=14008 u=jnetx |  Monday 17 December 2018  12:58:12 +0300 (0:00:00.214)       0:00:00.602 ******* 
+2018-12-17 12:58:13,035 p=14008 u=jnetx |  ok: [localhost] => {
+    "msg": [
+        "with_conda = False", 
+        "with_conda_version = 4.5.11", 
+        "with_docker = False", 
+        "with_docker_version = 18.03.1.ce", 
+        "with_flavor = testfarm-flavor-2-16-21", 
+        "with_foundation = False", 
+        "with_foundation_version = 10.0.0.pb02", 
+        "with_gemfire = True", 
+        "with_gemfire_version = 8.2.1", 
+        "with_image = _default_", 
+        "with_java_version = 1.7.0_51", 
+        "with_kubernetes = False", 
+        "with_kubernetes_version = 1.10.4", 
+        "with_oracle = True", 
+        "with_oracle_version = 11.2.0", 
+        "with_os_version = rhel7.3", 
+        "with_postgresql = False", 
+        "with_postgresql_version = 9.5", 
+        "with_tibco = False", 
+        "with_tibco_version = 8.4.5", 
+        "with_ulticom = False", 
+        "with_ulticom_version = _default_", 
+        ""
+    ]
+}
+2018-12-17 12:58:13,041 p=14008 u=jnetx |  TASK [jx.vm : include] *********************************************************
+2018-12-17 12:58:13,042 p=14008 u=jnetx |  Monday 17 December 2018  12:58:13 +0300 (0:00:00.092)       0:00:00.695 ******* 
+2018-12-17 12:58:13,125 p=14008 u=jnetx |  included: /opt/tower/playbooks/roles/jx.vm/tasks/mode-create.yml for localhost
+2018-12-17 12:58:13,136 p=14008 u=jnetx |  TASK [jx.vm : prepare private key] *********************************************
+2018-12-17 12:58:13,136 p=14008 u=jnetx |  Monday 17 December 2018  12:58:13 +0300 (0:00:00.094)       0:00:00.789 ******* 
+2018-12-17 12:58:13,826 p=14008 u=jnetx |  ok: [localhost]
+2018-12-17 12:58:13,833 p=14008 u=jnetx |  TASK [jx.vm : find VMs] ********************************************************
+2018-12-17 12:58:13,833 p=14008 u=jnetx |  Monday 17 December 2018  12:58:13 +0300 (0:00:00.696)       0:00:01.486 ******* 
+2018-12-17 12:58:18,442 p=14008 u=jnetx |  ok: [localhost]
+2018-12-17 12:58:18,449 p=14008 u=jnetx |  TASK [jx.vm : set_fact] ********************************************************
+2018-12-17 12:58:18,449 p=14008 u=jnetx |  Monday 17 December 2018  12:58:18 +0300 (0:00:04.615)       0:00:06.102 ******* 
+2018-12-17 12:58:18,570 p=14008 u=jnetx |  ok: [localhost]
+2018-12-17 12:58:18,576 p=14008 u=jnetx |  TASK [jx.vm : delete VMs with error status] ************************************
+2018-12-17 12:58:18,577 p=14008 u=jnetx |  Monday 17 December 2018  12:58:18 +0300 (0:00:00.127)       0:00:06.230 ******* 
+2018-12-17 12:58:18,598 p=14008 u=jnetx |  TASK [jx.vm : wait for delete] *************************************************
+2018-12-17 12:58:18,599 p=14008 u=jnetx |  Monday 17 December 2018  12:58:18 +0300 (0:00:00.021)       0:00:06.252 ******* 
+2018-12-17 12:58:18,620 p=14008 u=jnetx |  TASK [jx.vm : collect networking data for eth0] ********************************
+2018-12-17 12:58:18,620 p=14008 u=jnetx |  Monday 17 December 2018  12:58:18 +0300 (0:00:00.021)       0:00:06.273 ******* 
+2018-12-17 12:58:19,494 p=14008 u=jnetx |  ok: [localhost]
+2018-12-17 12:58:19,501 p=14008 u=jnetx |  TASK [jx.vm : create ipv4 ports for eth0] **************************************
+2018-12-17 12:58:19,501 p=14008 u=jnetx |  Monday 17 December 2018  12:58:19 +0300 (0:00:00.880)       0:00:07.154 ******* 
+2018-12-17 12:58:20,795 p=14008 u=jnetx |  changed: [localhost] => (item=1)
+2018-12-17 12:58:21,745 p=14008 u=jnetx |  changed: [localhost] => (item=2)
+2018-12-17 12:58:22,747 p=14008 u=jnetx |  changed: [localhost] => (item=3)
+2018-12-17 12:58:23,630 p=14008 u=jnetx |  changed: [localhost] => (item=4)
+2018-12-17 12:58:24,773 p=14008 u=jnetx |  changed: [localhost] => (item=5)
+2018-12-17 12:58:25,702 p=14008 u=jnetx |  changed: [localhost] => (item=6)
+2018-12-17 12:58:26,719 p=14008 u=jnetx |  changed: [localhost] => (item=7)
+2018-12-17 12:58:27,625 p=14008 u=jnetx |  changed: [localhost] => (item=8)
+2018-12-17 12:58:28,549 p=14008 u=jnetx |  changed: [localhost] => (item=9)
+2018-12-17 12:58:29,656 p=14008 u=jnetx |  changed: [localhost] => (item=10)
+2018-12-17 12:58:30,671 p=14008 u=jnetx |  changed: [localhost] => (item=11)
+2018-12-17 12:58:31,620 p=14008 u=jnetx |  changed: [localhost] => (item=12)
+2018-12-17 12:58:32,548 p=14008 u=jnetx |  changed: [localhost] => (item=13)
+2018-12-17 12:58:33,560 p=14008 u=jnetx |  changed: [localhost] => (item=14)
+2018-12-17 12:58:34,669 p=14008 u=jnetx |  changed: [localhost] => (item=15)
+2018-12-17 12:58:35,759 p=14008 u=jnetx |  changed: [localhost] => (item=16)
+2018-12-17 12:58:36,699 p=14008 u=jnetx |  changed: [localhost] => (item=17)
+2018-12-17 12:58:37,661 p=14008 u=jnetx |  changed: [localhost] => (item=18)
+2018-12-17 12:58:38,683 p=14008 u=jnetx |  changed: [localhost] => (item=19)
+2018-12-17 12:58:39,643 p=14008 u=jnetx |  changed: [localhost] => (item=20)
+2018-12-17 12:58:39,661 p=14008 u=jnetx |  TASK [jx.vm : collect networking data for eth1] ********************************
+2018-12-17 12:58:39,662 p=14008 u=jnetx |  Monday 17 December 2018  12:58:39 +0300 (0:00:20.160)       0:00:27.315 ******* 
+2018-12-17 12:58:40,387 p=14008 u=jnetx |  ok: [localhost]
+2018-12-17 12:58:40,395 p=14008 u=jnetx |  TASK [jx.vm : create ipv4 ports for eth1] **************************************
+2018-12-17 12:58:40,395 p=14008 u=jnetx |  Monday 17 December 2018  12:58:40 +0300 (0:00:00.733)       0:00:28.048 ******* 
+2018-12-17 12:58:41,531 p=14008 u=jnetx |  changed: [localhost] => (item=1)
+2018-12-17 12:58:42,498 p=14008 u=jnetx |  changed: [localhost] => (item=2)
+2018-12-17 12:58:43,526 p=14008 u=jnetx |  changed: [localhost] => (item=3)
+2018-12-17 12:58:44,503 p=14008 u=jnetx |  changed: [localhost] => (item=4)
+2018-12-17 12:58:45,509 p=14008 u=jnetx |  changed: [localhost] => (item=5)
+2018-12-17 12:58:46,507 p=14008 u=jnetx |  changed: [localhost] => (item=6)
+2018-12-17 12:58:47,457 p=14008 u=jnetx |  changed: [localhost] => (item=7)
+2018-12-17 12:58:48,470 p=14008 u=jnetx |  changed: [localhost] => (item=8)
+2018-12-17 12:58:49,649 p=14008 u=jnetx |  changed: [localhost] => (item=9)
+2018-12-17 12:58:50,574 p=14008 u=jnetx |  changed: [localhost] => (item=10)
+2018-12-17 12:58:51,552 p=14008 u=jnetx |  changed: [localhost] => (item=11)
+2018-12-17 12:58:52,555 p=14008 u=jnetx |  changed: [localhost] => (item=12)
+2018-12-17 12:58:53,571 p=14008 u=jnetx |  changed: [localhost] => (item=13)
+2018-12-17 12:58:54,515 p=14008 u=jnetx |  changed: [localhost] => (item=14)
+2018-12-17 12:58:55,492 p=14008 u=jnetx |  changed: [localhost] => (item=15)
+2018-12-17 12:58:56,491 p=14008 u=jnetx |  changed: [localhost] => (item=16)
+2018-12-17 12:58:57,533 p=14008 u=jnetx |  changed: [localhost] => (item=17)
+2018-12-17 12:58:58,478 p=14008 u=jnetx |  changed: [localhost] => (item=18)
+2018-12-17 12:58:59,485 p=14008 u=jnetx |  changed: [localhost] => (item=19)
+2018-12-17 12:59:00,610 p=14008 u=jnetx |  changed: [localhost] => (item=20)
+2018-12-17 12:59:00,629 p=14008 u=jnetx |  TASK [jx.vm : create ipv4 ports for eth2] **************************************
+2018-12-17 12:59:00,630 p=14008 u=jnetx |  Monday 17 December 2018  12:59:00 +0300 (0:00:20.234)       0:00:48.283 ******* 
+2018-12-17 12:59:01,685 p=14008 u=jnetx |  changed: [localhost] => (item=1)
+2018-12-17 12:59:02,706 p=14008 u=jnetx |  changed: [localhost] => (item=2)
+2018-12-17 12:59:03,758 p=14008 u=jnetx |  changed: [localhost] => (item=3)
+2018-12-17 12:59:04,769 p=14008 u=jnetx |  changed: [localhost] => (item=4)
+2018-12-17 12:59:05,911 p=14008 u=jnetx |  changed: [localhost] => (item=5)
+2018-12-17 12:59:06,951 p=14008 u=jnetx |  changed: [localhost] => (item=6)
+2018-12-17 12:59:07,945 p=14008 u=jnetx |  changed: [localhost] => (item=7)
+2018-12-17 12:59:08,975 p=14008 u=jnetx |  changed: [localhost] => (item=8)
+2018-12-17 12:59:10,032 p=14008 u=jnetx |  changed: [localhost] => (item=9)
+2018-12-17 12:59:11,072 p=14008 u=jnetx |  changed: [localhost] => (item=10)
+2018-12-17 12:59:12,025 p=14008 u=jnetx |  changed: [localhost] => (item=11)
+2018-12-17 12:59:12,972 p=14008 u=jnetx |  changed: [localhost] => (item=12)
+2018-12-17 12:59:14,040 p=14008 u=jnetx |  changed: [localhost] => (item=13)
+2018-12-17 12:59:15,074 p=14008 u=jnetx |  changed: [localhost] => (item=14)
+2018-12-17 12:59:16,136 p=14008 u=jnetx |  changed: [localhost] => (item=15)
+2018-12-17 12:59:17,118 p=14008 u=jnetx |  changed: [localhost] => (item=16)
+2018-12-17 12:59:18,170 p=14008 u=jnetx |  changed: [localhost] => (item=17)
+2018-12-17 12:59:19,191 p=14008 u=jnetx |  changed: [localhost] => (item=18)
+2018-12-17 12:59:20,129 p=14008 u=jnetx |  changed: [localhost] => (item=19)
+2018-12-17 12:59:21,305 p=14008 u=jnetx |  changed: [localhost] => (item=20)
+2018-12-17 12:59:21,323 p=14008 u=jnetx |  TASK [jx.vm : create ipv6 ports] ***********************************************
+2018-12-17 12:59:21,323 p=14008 u=jnetx |  Monday 17 December 2018  12:59:21 +0300 (0:00:20.693)       0:01:08.976 ******* 
+2018-12-17 12:59:22,425 p=14008 u=jnetx |  changed: [localhost] => (item=1)
+2018-12-17 12:59:23,484 p=14008 u=jnetx |  changed: [localhost] => (item=2)
+2018-12-17 12:59:24,458 p=14008 u=jnetx |  changed: [localhost] => (item=3)
+2018-12-17 12:59:25,535 p=14008 u=jnetx |  changed: [localhost] => (item=4)
+2018-12-17 12:59:26,602 p=14008 u=jnetx |  changed: [localhost] => (item=5)
+2018-12-17 12:59:27,645 p=14008 u=jnetx |  changed: [localhost] => (item=6)
+2018-12-17 12:59:28,615 p=14008 u=jnetx |  changed: [localhost] => (item=7)
+2018-12-17 12:59:29,645 p=14008 u=jnetx |  changed: [localhost] => (item=8)
+2018-12-17 12:59:30,788 p=14008 u=jnetx |  changed: [localhost] => (item=9)
+2018-12-17 12:59:31,869 p=14008 u=jnetx |  changed: [localhost] => (item=10)
+2018-12-17 12:59:32,846 p=14008 u=jnetx |  changed: [localhost] => (item=11)
+2018-12-17 12:59:33,903 p=14008 u=jnetx |  changed: [localhost] => (item=12)
+2018-12-17 12:59:34,961 p=14008 u=jnetx |  changed: [localhost] => (item=13)
+2018-12-17 12:59:35,916 p=14008 u=jnetx |  changed: [localhost] => (item=14)
+2018-12-17 12:59:36,930 p=14008 u=jnetx |  changed: [localhost] => (item=15)
+2018-12-17 12:59:37,930 p=14008 u=jnetx |  changed: [localhost] => (item=16)
+2018-12-17 12:59:38,935 p=14008 u=jnetx |  changed: [localhost] => (item=17)
+2018-12-17 12:59:39,964 p=14008 u=jnetx |  changed: [localhost] => (item=18)
+2018-12-17 12:59:40,988 p=14008 u=jnetx |  changed: [localhost] => (item=19)
+2018-12-17 12:59:41,961 p=14008 u=jnetx |  changed: [localhost] => (item=20)
+2018-12-17 12:59:41,979 p=14008 u=jnetx |  TASK [jx.vm : set_fact] ********************************************************
+2018-12-17 12:59:41,980 p=14008 u=jnetx |  Monday 17 December 2018  12:59:41 +0300 (0:00:20.656)       0:01:29.633 ******* 
+2018-12-17 12:59:42,074 p=14008 u=jnetx |  ok: [localhost]
+2018-12-17 12:59:42,081 p=14008 u=jnetx |  TASK [jx.vm : set_fact] ********************************************************
+2018-12-17 12:59:42,081 p=14008 u=jnetx |  Monday 17 December 2018  12:59:42 +0300 (0:00:00.101)       0:01:29.734 ******* 
+2018-12-17 12:59:42,174 p=14008 u=jnetx |  ok: [localhost]
+2018-12-17 12:59:42,181 p=14008 u=jnetx |  TASK [jx.vm : create VMs] ******************************************************
+2018-12-17 12:59:42,181 p=14008 u=jnetx |  Monday 17 December 2018  12:59:42 +0300 (0:00:00.099)       0:01:29.834 ******* 
+2018-12-17 12:59:43,624 p=14008 u=jnetx |  changed: [localhost] => (item=1)
+2018-12-17 12:59:44,775 p=14008 u=jnetx |  changed: [localhost] => (item=2)
+2018-12-17 12:59:45,930 p=14008 u=jnetx |  changed: [localhost] => (item=3)
+2018-12-17 12:59:47,085 p=14008 u=jnetx |  changed: [localhost] => (item=4)
+2018-12-17 12:59:48,257 p=14008 u=jnetx |  changed: [localhost] => (item=5)
+2018-12-17 12:59:49,410 p=14008 u=jnetx |  changed: [localhost] => (item=6)
+2018-12-17 12:59:50,571 p=14008 u=jnetx |  changed: [localhost] => (item=7)
+2018-12-17 12:59:51,727 p=14008 u=jnetx |  changed: [localhost] => (item=8)
+2018-12-17 12:59:52,881 p=14008 u=jnetx |  changed: [localhost] => (item=9)
+2018-12-17 12:59:54,041 p=14008 u=jnetx |  changed: [localhost] => (item=10)
+2018-12-17 12:59:55,223 p=14008 u=jnetx |  changed: [localhost] => (item=11)
+2018-12-17 12:59:56,386 p=14008 u=jnetx |  changed: [localhost] => (item=12)
+2018-12-17 12:59:57,560 p=14008 u=jnetx |  changed: [localhost] => (item=13)
+2018-12-17 12:59:58,733 p=14008 u=jnetx |  changed: [localhost] => (item=14)
+2018-12-17 12:59:59,907 p=14008 u=jnetx |  changed: [localhost] => (item=15)
+2018-12-17 13:00:01,080 p=14008 u=jnetx |  changed: [localhost] => (item=16)
+2018-12-17 13:00:02,251 p=14008 u=jnetx |  changed: [localhost] => (item=17)
+2018-12-17 13:00:03,424 p=14008 u=jnetx |  changed: [localhost] => (item=18)
+2018-12-17 13:00:04,591 p=14008 u=jnetx |  changed: [localhost] => (item=19)
+2018-12-17 13:00:05,755 p=14008 u=jnetx |  changed: [localhost] => (item=20)
+2018-12-17 13:00:05,771 p=14008 u=jnetx |  TASK [jx.vm : wait for VMs to boot] ********************************************
+2018-12-17 13:00:05,771 p=14008 u=jnetx |  Monday 17 December 2018  13:00:05 +0300 (0:00:23.589)       0:01:53.424 ******* 
+2018-12-17 13:00:06,244 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (25 retries left).
+2018-12-17 13:00:11,396 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (24 retries left).
+2018-12-17 13:00:16,547 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (23 retries left).
+2018-12-17 13:00:21,692 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (22 retries left).
+2018-12-17 13:00:26,828 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (21 retries left).
+2018-12-17 13:00:31,974 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (20 retries left).
+2018-12-17 13:00:37,114 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (19 retries left).
+2018-12-17 13:00:42,262 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (18 retries left).
+2018-12-17 13:00:47,412 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (17 retries left).
+2018-12-17 13:00:52,565 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (16 retries left).
+2018-12-17 13:00:57,706 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (15 retries left).
+2018-12-17 13:01:02,843 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (14 retries left).
+2018-12-17 13:01:07,981 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (13 retries left).
+2018-12-17 13:01:13,121 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (12 retries left).
+2018-12-17 13:01:18,255 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (11 retries left).
+2018-12-17 13:01:23,388 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (10 retries left).
+2018-12-17 13:01:28,521 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (9 retries left).
+2018-12-17 13:01:33,676 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (8 retries left).
+2018-12-17 13:01:38,813 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (7 retries left).
+2018-12-17 13:01:43,948 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (6 retries left).
+2018-12-17 13:01:49,081 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (5 retries left).
+2018-12-17 13:01:54,213 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (4 retries left).
+2018-12-17 13:01:59,349 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (3 retries left).
+2018-12-17 13:02:04,547 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (2 retries left).
+2018-12-17 13:02:09,681 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (1 retries left).
+2018-12-17 13:02:14,812 p=14008 u=jnetx |  failed: [localhost] (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'281828959391.15083', 'failed': False, u'started': 1, 'changed': True, 'item': u'1', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/281828959391.15083', '_ansible_ignore_errors': None}) => {"ansible_job_id": "281828959391.15083", "attempts": 25, "changed": false, "finished": 0, "item": {"ansible_job_id": "281828959391.15083", "changed": true, "failed": false, "finished": 0, "item": "1", "results_file": "/tmp/tower-jnetx/.ansible_async/281828959391.15083", "started": 1}, "started": 1}
+2018-12-17 13:02:14,992 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'683470810039.15116', 'failed': False, u'started': 1, 'changed': True, 'item': u'2', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/683470810039.15116', '_ansible_ignore_errors': None})
+2018-12-17 13:02:15,155 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'398425673998.15143', 'failed': False, u'started': 1, 'changed': True, 'item': u'3', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/398425673998.15143', '_ansible_ignore_errors': None})
+2018-12-17 13:02:15,313 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'580177540776.15170', 'failed': False, u'started': 1, 'changed': True, 'item': u'4', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/580177540776.15170', '_ansible_ignore_errors': None})
+2018-12-17 13:02:15,478 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'608232016067.15197', 'failed': False, u'started': 1, 'changed': True, 'item': u'5', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/608232016067.15197', '_ansible_ignore_errors': None})
+2018-12-17 13:02:15,644 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'151493547050.15224', 'failed': False, u'started': 1, 'changed': True, 'item': u'6', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/151493547050.15224', '_ansible_ignore_errors': None})
+2018-12-17 13:02:15,810 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'361114700012.15251', 'failed': False, u'started': 1, 'changed': True, 'item': u'7', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/361114700012.15251', '_ansible_ignore_errors': None})
+2018-12-17 13:02:15,925 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (25 retries left).
+2018-12-17 13:02:21,057 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (24 retries left).
+2018-12-17 13:02:26,189 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (23 retries left).
+2018-12-17 13:02:31,324 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (22 retries left).
+2018-12-17 13:02:36,459 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (21 retries left).
+2018-12-17 13:02:41,594 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (20 retries left).
+2018-12-17 13:02:46,725 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (19 retries left).
+2018-12-17 13:02:51,853 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (18 retries left).
+2018-12-17 13:02:56,990 p=14008 u=jnetx |  FAILED - RETRYING: wait for VMs to boot (17 retries left).
+2018-12-17 13:03:02,132 p=14008 u=jnetx |  failed: [localhost] (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'677953930445.15279', 'failed': False, u'started': 1, 'changed': True, 'item': u'8', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/677953930445.15279', '_ansible_ignore_errors': None}) => {"ansible_job_id": "677953930445.15279", "attempts": 10, "changed": false, "extra_data": null, "finished": 1, "item": {"ansible_job_id": "677953930445.15279", "changed": true, "failed": false, "finished": 0, "item": "8", "results_file": "/tmp/tower-jnetx/.ansible_async/677953930445.15279", "started": 1}, "msg": "Timeout waiting for the server to come up."}
+2018-12-17 13:03:02,311 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'997423360036.15306', 'failed': False, u'started': 1, 'changed': True, 'item': u'9', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/997423360036.15306', '_ansible_ignore_errors': None})
+2018-12-17 13:03:02,470 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'762517709844.15335', 'failed': False, u'started': 1, 'changed': True, 'item': u'10', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/762517709844.15335', '_ansible_ignore_errors': None})
+2018-12-17 13:03:02,633 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'182675909731.15366', 'failed': False, u'started': 1, 'changed': True, 'item': u'11', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/182675909731.15366', '_ansible_ignore_errors': None})
+2018-12-17 13:03:02,794 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'474439607070.15393', 'failed': False, u'started': 1, 'changed': True, 'item': u'12', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/474439607070.15393', '_ansible_ignore_errors': None})
+2018-12-17 13:03:02,957 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'821715907945.15420', 'failed': False, u'started': 1, 'changed': True, 'item': u'13', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/821715907945.15420', '_ansible_ignore_errors': None})
+2018-12-17 13:03:03,117 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'877747719162.15448', 'failed': False, u'started': 1, 'changed': True, 'item': u'14', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/877747719162.15448', '_ansible_ignore_errors': None})
+2018-12-17 13:03:03,283 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'139832314471.15475', 'failed': False, u'started': 1, 'changed': True, 'item': u'15', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/139832314471.15475', '_ansible_ignore_errors': None})
+2018-12-17 13:03:03,442 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'281065765477.15502', 'failed': False, u'started': 1, 'changed': True, 'item': u'16', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/281065765477.15502', '_ansible_ignore_errors': None})
+2018-12-17 13:03:03,606 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'831175285239.15529', 'failed': False, u'started': 1, 'changed': True, 'item': u'17', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/831175285239.15529', '_ansible_ignore_errors': None})
+2018-12-17 13:03:03,793 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'489908913639.15569', 'failed': False, u'started': 1, 'changed': True, 'item': u'18', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/489908913639.15569', '_ansible_ignore_errors': None})
+2018-12-17 13:03:03,958 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'58241395774.15596', 'failed': False, u'started': 1, 'changed': True, 'item': u'19', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/58241395774.15596', '_ansible_ignore_errors': None})
+2018-12-17 13:03:04,152 p=14008 u=jnetx |  changed: [localhost] => (item={'_ansible_parsed': True, '_ansible_item_result': True, '_ansible_no_log': False, u'ansible_job_id': u'137172321696.15627', 'failed': False, u'started': 1, 'changed': True, 'item': u'20', u'finished': 0, u'results_file': u'/tmp/tower-jnetx/.ansible_async/137172321696.15627', '_ansible_ignore_errors': None})
+2018-12-17 13:03:04,774 p=14008 u=jnetx |  NO MORE HOSTS LEFT *************************************************************
+2018-12-17 13:03:04,775 p=14008 u=jnetx |  PLAY RECAP *********************************************************************
+2018-12-17 13:03:04,776 p=14008 u=jnetx |  localhost                  : ok=16   changed=5    unreachable=0    failed=1   
+2018-12-17 13:03:04,776 p=14008 u=jnetx |  Monday 17 December 2018  13:03:04 +0300 (0:02:59.004)       0:04:52.429 ******* 
+2018-12-17 13:03:04,776 p=14008 u=jnetx |  =============================================================================== 
+2018-12-17 13:03:04,776 p=14008 u=jnetx |  jx.vm : wait for VMs to boot ------------------------------------------ 179.00s
+2018-12-17 13:03:04,776 p=14008 u=jnetx |  jx.vm : create VMs ----------------------------------------------------- 23.59s
+2018-12-17 13:03:04,776 p=14008 u=jnetx |  jx.vm : create ipv4 ports for eth2 ------------------------------------- 20.69s
+2018-12-17 13:03:04,777 p=14008 u=jnetx |  jx.vm : create ipv6 ports ---------------------------------------------- 20.66s
+2018-12-17 13:03:04,777 p=14008 u=jnetx |  jx.vm : create ipv4 ports for eth1 ------------------------------------- 20.23s
+2018-12-17 13:03:04,777 p=14008 u=jnetx |  jx.vm : create ipv4 ports for eth0 ------------------------------------- 20.16s
+2018-12-17 13:03:04,777 p=14008 u=jnetx |  jx.vm : find VMs -------------------------------------------------------- 4.62s
+2018-12-17 13:03:04,777 p=14008 u=jnetx |  jx.vm : collect networking data for eth0 -------------------------------- 0.88s
+2018-12-17 13:03:04,777 p=14008 u=jnetx |  jx.vm : collect networking data for eth1 -------------------------------- 0.73s
+2018-12-17 13:03:04,777 p=14008 u=jnetx |  jx.vm : prepare private key --------------------------------------------- 0.70s
+2018-12-17 13:03:04,777 p=14008 u=jnetx |  set_fact ---------------------------------------------------------------- 0.21s
+2018-12-17 13:03:04,778 p=14008 u=jnetx |  print playbook variables ------------------------------------------------ 0.15s
+2018-12-17 13:03:04,778 p=14008 u=jnetx |  jx.vm : set_fact -------------------------------------------------------- 0.13s
+2018-12-17 13:03:04,778 p=14008 u=jnetx |  jx.vm : set_fact -------------------------------------------------------- 0.10s
+2018-12-17 13:03:04,778 p=14008 u=jnetx |  jx.vm : set_fact -------------------------------------------------------- 0.10s
+2018-12-17 13:03:04,778 p=14008 u=jnetx |  jx.vm : include --------------------------------------------------------- 0.09s
+2018-12-17 13:03:04,778 p=14008 u=jnetx |  print software options -------------------------------------------------- 0.09s
+2018-12-17 13:03:04,778 p=14008 u=jnetx |  jx.vm : delete VMs with error status ------------------------------------ 0.02s
+2018-12-17 13:03:04,778 p=14008 u=jnetx |  jx.vm : wait for delete ------------------------------------------------- 0.02s
